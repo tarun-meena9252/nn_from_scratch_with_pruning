@@ -94,3 +94,154 @@ def test_network_gradient_check():
             f"Gradient check failed for parameter shape "
             f"{parameter.shape}: relative error = {error}"
         )
+
+
+
+def test_linear_gradients_are_finite():
+    """Forward outputs, loss, and parameter gradients must be finite."""
+    rng = np.random.default_rng(101)
+
+    x = rng.normal(size=(4, 3))
+    target = rng.normal(size=(4, 2))
+
+    layer = Linear(3, 2, initializer="xavier_uniform", seed=10)
+
+    prediction = layer.forward(x)
+    loss = 0.5 * np.mean((prediction - target) ** 2)
+
+    grad_output = (prediction - target) / prediction.size
+    layer.zero_grad()
+    layer.backward(grad_output)
+
+    assert np.all(np.isfinite(prediction))
+    assert np.isfinite(loss)
+
+    assert layer.W.grad is not None
+    assert layer.b.grad is not None
+
+    assert np.all(np.isfinite(layer.W.grad))
+    assert np.all(np.isfinite(layer.b.grad))
+
+
+def test_network_gradients_are_finite():
+    """Check numerical stability across a complete network."""
+    rng = np.random.default_rng(102)
+
+    x = rng.normal(size=(5, 3))
+    y = np.array([0, 1, 2, 1, 0])
+
+    model = Sequential([
+        Linear(3, 8, initializer="he_normal", seed=1),
+        ReLU(),
+        Linear(8, 3, initializer="xavier_uniform", seed=2),
+    ])
+
+    loss_fn = CrossEntropyLoss()
+
+    logits = model.forward(x)
+    loss = loss_fn.forward(logits, y)
+
+    model.zero_grad()
+    grad_logits = loss_fn.backward()
+    model.backward(grad_logits)
+
+    assert np.all(np.isfinite(logits))
+    assert np.isfinite(loss)
+    assert np.all(np.isfinite(grad_logits))
+
+    for parameter in model.parameters():
+        assert parameter.grad is not None
+        assert np.all(np.isfinite(parameter.grad)), (
+            f"NaN or Inf gradient in parameter shape "
+            f"{parameter.shape}"
+        )
+
+
+def test_gradient_shapes_match_parameter_shapes():
+    """Every trainable parameter gradient must have the right shape."""
+    rng = np.random.default_rng(103)
+
+    x = rng.normal(size=(4, 3))
+    y = np.array([0, 1, 2, 0])
+
+    model = Sequential([
+        Linear(3, 5, initializer="he_normal", seed=1),
+        ReLU(),
+        Linear(5, 3, initializer="xavier_uniform", seed=2),
+    ])
+
+    loss_fn = CrossEntropyLoss()
+
+    logits = model.forward(x)
+    loss_fn.forward(logits, y)
+
+    model.zero_grad()
+    model.backward(loss_fn.backward())
+
+    for parameter in model.parameters():
+        assert parameter.grad.shape == parameter.shape
+        assert parameter.grad.size == parameter.data.size
+
+
+def test_linear_zero_upstream_gradient_produces_zero_gradients():
+    """A zero upstream gradient should produce zero W and b gradients."""
+    rng = np.random.default_rng(104)
+
+    x = rng.normal(size=(4, 3))
+    layer = Linear(3, 2, initializer="xavier_uniform", seed=10)
+
+    layer.forward(x)
+    layer.zero_grad()
+
+    grad_output = np.zeros((4, 2))
+    layer.backward(grad_output)
+
+    np.testing.assert_allclose(layer.W.grad, 0.0, atol=1e-12)
+    np.testing.assert_allclose(layer.b.grad, 0.0, atol=1e-12)
+
+
+def test_network_gradients_are_repeatable():
+    """Identical inputs and parameters should produce identical gradients."""
+    rng = np.random.default_rng(105)
+
+    x = rng.normal(size=(4, 3))
+    y = np.array([0, 1, 2, 0])
+
+    model = Sequential([
+        Linear(3, 5, initializer="he_normal", seed=1),
+        ReLU(),
+        Linear(5, 3, initializer="xavier_uniform", seed=2),
+    ])
+
+    loss_fn = CrossEntropyLoss()
+
+    def calculate_gradients():
+        logits = model.forward(x)
+        loss_fn.forward(logits, y)
+
+        model.zero_grad()
+        model.backward(loss_fn.backward())
+
+        return [
+            parameter.grad.copy()
+            for parameter in model.parameters()
+        ]
+
+    first = calculate_gradients()
+    second = calculate_gradients()
+
+    for grad1, grad2 in zip(first, second):
+        np.testing.assert_allclose(
+            grad1, grad2, rtol=1e-12, atol=1e-12
+        )
+
+
+def test_relative_error_detects_incorrect_gradient():
+    """The gradient-check comparison should detect a wrong gradient."""
+    analytic = np.array([0.25, -0.5, 1.0])
+    incorrect = np.array([0.25, -0.1, 1.0])
+
+    errors = relative_error(analytic, incorrect)
+
+    assert np.max(errors) > 1e-6
+
