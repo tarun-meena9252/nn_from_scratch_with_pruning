@@ -12,3 +12,7 @@
 # PART 3 — MAKE IT PRUNE ITSELF (The core of the challenge)
 
     python -m pytest -q && python -m experiments.part3
+
+# PART 4 — PROVE IT (Required evidence)
+
+    python -m pytest -q && python -m experiments.part4
