@@ -33,6 +33,24 @@ Run all commands below from the repository root with the virtual environment act
 
 ---
 
+## Dataset
+
+The MNIST dataset is provided as `archive.zip` and must be extracted before running any training or pruning experiments (Parts 2-4 and the optional magnitude pruning sweep).
+
+Place `archive.zip` in the repository root and extract it there:
+
+```bash
+# Linux / macOS
+unzip archive.zip
+
+# Any platform (uses Python's built-in zipfile module)
+python -m zipfile -e archive.zip .
+```
+
+On Windows you can also right-click `archive.zip` and choose **Extract All...**, selecting the repository root as the destination.
+
+---
+
 ## Running the experiments
 
 ### Part 1 — Reverse-mode autodiff engine that survives a changing graph
