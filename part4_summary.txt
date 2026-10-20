@@ -1,0 +1,66 @@
+====================== SEED 11 ======================
+Baseline accuracy: 97.85% | Weights: 109,184
+--- MAGNITUDE | seed=11 ---
+Stage 1 | weights=80,352 | reduction=26.41% | before=93.06% | after=98.05% | latency=0.001228 ms/image
+Stage 2 | weights=52,544 | reduction=51.88% | before=91.73% | after=97.43% | latency=0.001018 ms/image
+Stage 3 | weights=25,760 | reduction=76.41% | before=64.20% | after=97.07% | latency=0.000750 ms/image
+Stage 4 | weights=12,752 | reduction=88.32% | before=35.99% | after=96.12% | latency=0.000605 ms/image
+Stage 5 | weights=5,539 | reduction=94.93% | before=23.32% | after=87.48% | latency=0.000938 ms/image
+--- TAYLOR | seed=11 ---
+Stage 1 | weights=80,352 | reduction=26.41% | before=94.75% | after=97.51% | latency=0.001384 ms/image
+Stage 2 | weights=52,544 | reduction=51.88% | before=89.56% | after=97.26% | latency=0.000957 ms/image
+Stage 3 | weights=25,760 | reduction=76.41% | before=61.37% | after=97.18% | latency=0.000718 ms/image
+Stage 4 | weights=12,752 | reduction=88.32% | before=55.19% | after=95.78% | latency=0.000776 ms/image
+Stage 5 | weights=5,539 | reduction=94.93% | before=29.11% | after=87.17% | latency=0.000614 ms/image
+
+====================== SEED 22 ======================
+Baseline accuracy: 97.91% | Weights: 109,184
+--- MAGNITUDE | seed=22 ---
+Stage 1 | weights=80,352 | reduction=26.41% | before=92.93% | after=97.68% | latency=0.001252 ms/image
+Stage 2 | weights=52,544 | reduction=51.88% | before=85.61% | after=97.65% | latency=0.000974 ms/image
+Stage 3 | weights=25,760 | reduction=76.41% | before=53.63% | after=97.00% | latency=0.000838 ms/image
+Stage 4 | weights=12,752 | reduction=88.32% | before=35.96% | after=95.27% | latency=0.000644 ms/image
+Stage 5 | weights=5,539 | reduction=94.93% | before=13.01% | after=85.85% | latency=0.000649 ms/image
+--- TAYLOR | seed=22 ---
+Stage 1 | weights=80,352 | reduction=26.41% | before=96.24% | after=97.97% | latency=0.001212 ms/image
+Stage 2 | weights=52,544 | reduction=51.88% | before=78.08% | after=97.60% | latency=0.001081 ms/image
+Stage 3 | weights=25,760 | reduction=76.41% | before=40.68% | after=97.27% | latency=0.000810 ms/image
+Stage 4 | weights=12,752 | reduction=88.32% | before=28.15% | after=95.63% | latency=0.000644 ms/image
+Stage 5 | weights=5,539 | reduction=94.93% | before=14.03% | after=85.39% | latency=0.000658 ms/image
+
+====================== SEED 33 ======================
+Baseline accuracy: 97.61% | Weights: 109,184
+--- MAGNITUDE | seed=33 ---
+Stage 1 | weights=80,352 | reduction=26.41% | before=94.04% | after=97.87% | latency=0.001278 ms/image
+Stage 2 | weights=52,544 | reduction=51.88% | before=88.66% | after=97.57% | latency=0.000976 ms/image
+Stage 3 | weights=25,760 | reduction=76.41% | before=47.07% | after=96.91% | latency=0.000740 ms/image
+Stage 4 | weights=12,752 | reduction=88.32% | before=47.60% | after=95.75% | latency=0.000676 ms/image
+Stage 5 | weights=5,539 | reduction=94.93% | before=35.89% | after=88.04% | latency=0.000660 ms/image
+--- TAYLOR | seed=33 ---
+Stage 1 | weights=80,352 | reduction=26.41% | before=94.57% | after=97.86% | latency=0.001351 ms/image
+Stage 2 | weights=52,544 | reduction=51.88% | before=82.26% | after=97.75% | latency=0.000995 ms/image
+Stage 3 | weights=25,760 | reduction=76.41% | before=60.97% | after=97.12% | latency=0.000929 ms/image
+Stage 4 | weights=12,752 | reduction=88.32% | before=35.24% | after=95.72% | latency=0.000640 ms/image
+Stage 5 | weights=5,539 | reduction=94.93% | before=23.31% | after=89.09% | latency=0.000637 ms/image
+
+
+========== THREE-SEED SUMMARY ==========
+Baseline accuracy: 97.79% +/- 0.16 pp
+
+Method       Stage   Weights  Reduction     Accuracy mean±std  Latency mean
+--------------------------------------------------------------------------------
+magnitude        1    80,352     26.41%    97.87 +/- 0.19        0.001253
+magnitude        2    52,544     51.88%    97.55 +/- 0.11        0.000989
+magnitude        3    25,760     76.41%    96.99 +/- 0.08        0.000776
+magnitude        4    12,752     88.32%    95.71 +/- 0.43        0.000642
+magnitude        5     5,539     94.93%    87.12 +/- 1.14        0.000749
+taylor           1    80,352     26.41%    97.78 +/- 0.24        0.001316
+taylor           2    52,544     51.88%    97.54 +/- 0.25        0.001011
+taylor           3    25,760     76.41%    97.19 +/- 0.08        0.000819
+taylor           4    12,752     88.32%    95.71 +/- 0.08        0.000687
+taylor           5     5,539     94.93%    87.22 +/- 1.85        0.000636
+
+All Part 4 plots saved:
+- ./plots/part4//part4_sparsity_accuracy_pareto.png
+- ./plots/part4//part4_latency_vs_reduction.png
+- ./plots/part4//part4_accuracy_vs_latency.png

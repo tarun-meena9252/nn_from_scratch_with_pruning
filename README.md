@@ -111,3 +111,12 @@ python -m pytest -q && python -m experiments.part4
 | Magnitude pruning sweep (optional) | `python -m experiments.finetune_magnitude_sweep` |
 | Part 3 self-pruning run | `python -m pytest -q && python -m experiments.part3` |
 | Part 4 Pareto sweep | `python -m pytest -q && python -m experiments.part4` |
+
+---
+
+## Results
+
+Output from the experiments is saved in the repository:
+
+- **Plots:** the plots for Part 2, Part 3, Part 4, and the one-shot magnitude pruning with fine-tuning experiment are in the [`./plots`](./plots) folder.
+- **Part 4 raw numbers:** the raw numbers from the Pareto sweep are in [`./part4_summary.txt`](./part4_summary.txt).
