@@ -10,7 +10,7 @@ Developed and tested with Python 3.14.3.
 
 ```bash
 # 1. Clone the repository and enter it
-git clone <your-repo-url>
+git clone https://github.com/tarun-meena9252/nn_from_scratch_with_pruning.git
 cd nn_from_scratch_with_pruning
 
 # 2. Create a virtual environment
