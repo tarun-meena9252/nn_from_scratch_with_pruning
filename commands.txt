@@ -4,3 +4,11 @@
 # PART 2 — TRAIN A NETWORK WITH A REAL OPTIMIZER (Mandatory)
 
     python -m pytest tests/test_core.py tests/test_adam.py tests/test_linear.py tests/test_initializers.py tests/test_activations.py tests/test_sequential.py tests/test_cross_entropy.py tests/test_gradient_check.py tests/test_training.py -q && python -m experiments.part2
+
+# (Optional) unstructured magnitude pruning using mask, zero-multiplication, one-shot pruning
+
+    python -m experiments.finetune_magnitude_sweep
+
+# PART 3 — MAKE IT PRUNE ITSELF (The core of the challenge)
+
+    python -m pytest -q && python -m experiments.part3
